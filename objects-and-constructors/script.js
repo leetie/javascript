@@ -12,3 +12,12 @@ const bookOne = new Book("Homeland", "R.A. Salvatore", "352", true);
 
 console.log(bookOne.title);
 console.log(bookOne.info());
+
+class Student {
+    constructor(name, grade) {
+        this.name = name;
+        this.grade = grade;
+    }
+}
+
+console.log(Student.prototype)
