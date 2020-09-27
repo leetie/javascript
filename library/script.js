@@ -1,4 +1,9 @@
 let myLibrary = [];
+const addBookButton = document.getElementById("add-book");
+
+addBookButton.addEventListener('click', function() {
+    console.log("clicked button!")
+})
 
 function Book(title, author, numPages, read = false) {
     this.title = title;
@@ -13,10 +18,6 @@ function Book(title, author, numPages, read = false) {
 function addBookToLibrary(book) {
     myLibrary.push(book);
 }
-
-addBookToLibrary(new Book("Homeland", "R.A. Salvatore", "352", true));
-addBookToLibrary(new Book("Eloquent Javascript, 3rd Edition: A Modern Introduction to Programming", "Marijn Haverbeke", 472, false));
-
 
 function appendToDocument(bookObj, index) {
     const bookContainer = document.getElementsByClassName("book-container")[0];
@@ -55,4 +56,7 @@ function appendToDocument(bookObj, index) {
     bookContainer.appendChild(bookElement);
 }
 
+
+addBookToLibrary(new Book("Homeland", "R.A. Salvatore", "352", true));
+addBookToLibrary(new Book("Eloquent Javascript, 3rd Edition: A Modern Introduction to Programming", "Marijn Haverbeke", 472, false));
 myLibrary.forEach(appendToDocument);
