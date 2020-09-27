@@ -1,9 +1,33 @@
 let myLibrary = [];
 const addBookButton = document.getElementById("add-book");
-
 addBookButton.addEventListener('click', function() {
-    console.log("clicked button!")
+    //onclick, check values in form fields, validate them, create a new book object,
+    //clear the form, and push the new book object to the page
+    const authorName = document.getElementById("author").value;
+    const title = document.getElementById("title").value;
+    const numberOfPages = document.getElementById("pages").value;
+
+    if (validateBook(numberOfPages, authorName, title)) {
+        $("#book-form").modal("toggle");
+        //create book object and add to page
+        //new book objs index will be myLibrary.length - 1
+        const book = new Book(title, authorName, numberOfPages, true);
+        addBookToLibrary(book);
+        appendToDocument(book, (myLibrary.length - 1));
+    } else {
+        alert("Please fill out form properly")
+    }
 })
+
+function validateBook(pages, author, title) {
+    if (
+        (parseInt(pages) > 0) &&
+        (author != "") && 
+        (title != "")
+    ) {
+        return true
+    } else { return false }
+}
 
 function Book(title, author, numPages, read = false) {
     this.title = title;
@@ -17,6 +41,7 @@ function Book(title, author, numPages, read = false) {
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
+    return book;
 }
 
 function appendToDocument(bookObj, index) {
@@ -53,10 +78,11 @@ function appendToDocument(bookObj, index) {
         }
         bookInfo.appendChild(readStatus);
     bookElement.appendChild(bookInfo);
+    bookElement.setAttribute('data-index', index);
     bookContainer.appendChild(bookElement);
 }
 
-
-addBookToLibrary(new Book("Homeland", "R.A. Salvatore", "352", true));
-addBookToLibrary(new Book("Eloquent Javascript, 3rd Edition: A Modern Introduction to Programming", "Marijn Haverbeke", 472, false));
-myLibrary.forEach(appendToDocument);
+// addBookToLibrary(new Book("Homeland", "R.A. Salvatore", "352", true));
+// addBookToLibrary(new Book("Eloquent Javascript, 3rd Edition: A Modern Introduction to Programming", "Marijn Haverbeke", 472, false));
+// addBookToLibrary(new Book("The Fellowship of the Ring", "J.R.R. Tolkien", 423, true))
+// myLibrary.forEach(appendToDocument);
