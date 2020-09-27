@@ -17,22 +17,42 @@ function addBookToLibrary(book) {
 addBookToLibrary(new Book("Homeland", "R.A. Salvatore", "352", true));
 addBookToLibrary(new Book("Eloquent Javascript, 3rd Edition: A Modern Introduction to Programming", "Marijn Haverbeke", 472, false));
 
-console.log(myLibrary)
 
 function appendToDocument(bookObj, index) {
     const bookContainer = document.getElementsByClassName("book-container")[0];
-    let element = document.createElement("div");
-    element.classList = "book";
-    element.innerHTML = "This is a book!";
-    console.log(bookObj)
-    console.log(index)
-    // bookContainer.appendChild(element);
-    // const books = bookContainer.getElementsByClassName("book");
 
-    // let textnode = document.createTextNode(myLibrary[0].title);
+    //book root
+    let bookElement = document.createElement("div");
+    bookElement.classList = "card book col-sm-12 col-md-4 col-lg-4"
 
-    // bookContainer.appendChild(textnode);
+    //book img thumbnail
+    let bookImg = document.createElement("img");
+    bookImg.classList = "card-img-top thumbnail img-fluid";
+    bookImg.src = "./assets/images/eloquent-javascript.jpg";
+    bookElement.appendChild(bookImg);
+
+    //book information
+    let bookInfo = document.createElement("div");
+    bookInfo.classList = "card-body";
+        let bookTitleAndAuthor = document.createElement("h5");
+            bookTitleAndAuthor.classList = "card-title"
+            bookTitleAndAuthor.innerHTML = bookObj.title + ", " + "by " + bookObj.author
+            bookInfo.appendChild(bookTitleAndAuthor);
+        let bookPages = document.createElement("p");
+            bookPages.classList = "pages";
+            bookPages.innerHTML = bookObj.numPages + " Pages - ";
+            bookInfo.appendChild(bookPages);
+        let readStatus = document.createElement("div");
+        if (bookObj.read == true) {
+            readStatus.classList = "read";
+            readStatus.innerHTML = "Read";
+        } else {
+            readStatus.classList = "unread";
+            readStatus.innerHTML = "Unread"
+        }
+        bookInfo.appendChild(readStatus);
+    bookElement.appendChild(bookInfo);
+    bookContainer.appendChild(bookElement);
 }
 
-// myLibrary.forEach(element => appendToDocument(element))
 myLibrary.forEach(appendToDocument);
