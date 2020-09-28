@@ -47,8 +47,8 @@
         </section>
     </div>
 
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#book-form">Open modal</button>
+    <i class="fas fa-plus fa-4x" data-toggle="modal" data-target="#book-form"></i>
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#book-form">Open modal</button> -->
 
     <div class="modal fade" id="book-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -72,7 +72,11 @@
                 <div class="form-group">
                     <label for="pages" class="col-form-label">Number of Pages:</label>
                     <input type="number" class="form-control" id="pages" required>
-                  </div>
+                </div>
+                <div class="form-group">
+                    <label for="read" class="col-form-label">Have you read this book?</label>
+                    <input type="checkbox" id="read" value="Yes">
+                </div>
               </form>
             </div>
             <div class="modal-footer">
@@ -87,9 +91,7 @@
 
 
 
-    <footer>
         <!-- <i id="add-book" class="fas fa-plus fa-4x"></i> -->
-    </footer>
 </body>
 <script src="script.js"></script>
 <!-- jquery -->

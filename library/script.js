@@ -1,21 +1,26 @@
 let myLibrary = [];
 const addBookButton = document.getElementById("add-book");
 addBookButton.addEventListener('click', function() {
-    //onclick, check values in form fields, validate them, create a new book object,
-    //clear the form, and push the new book object to the page
-    const authorName = document.getElementById("author").value;
-    const title = document.getElementById("title").value;
-    const numberOfPages = document.getElementById("pages").value;
+    const authorName = document.getElementById("author");
+    const title = document.getElementById("title");
+    const numberOfPages = document.getElementById("pages");
+    const read = document.getElementById("read").checked;
+    console.log(read);
 
-    if (validateBook(numberOfPages, authorName, title)) {
+    if (validateBook(numberOfPages.value, authorName.value, title.value)) {
         $("#book-form").modal("toggle");
         //create book object and add to page
         //new book objs index will be myLibrary.length - 1
-        const book = new Book(title, authorName, numberOfPages, true);
+        const book = new Book(title.value, authorName.value, numberOfPages.value, read);
         addBookToLibrary(book);
         appendToDocument(book, (myLibrary.length - 1));
+        //clear form
+        authorName.value = "";
+        title.value = "";
+        numberOfPages.value = "";
+        document.getElementById("read").checked = false;
     } else {
-        alert("Please fill out form properly")
+        alert("Please complete form")
     }
 })
 
@@ -35,7 +40,7 @@ function Book(title, author, numPages, read = false) {
     this.numPages = numPages;
     this.read = read;
     this.info = function() {
-        return this.title + " " + "by" + " " + this.author + ", " + this.numPages + " pages, " + (this.read == false ? "not read yet." : "read")
+        return this.title + " by " + this.author + ", " + this.numPages + " pages, " + (this.read == false ? "not read yet." : "read")
     }
 }
 
