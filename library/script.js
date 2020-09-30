@@ -60,7 +60,18 @@ function appendToDocument(bookObj, index) {
     let bookImg = document.createElement("img");
     bookImg.classList = "card-img-top thumbnail img-fluid";
     bookImg.src = "./assets/images/eloquent-javascript.jpg";
-    bookElement.appendChild(bookImg);
+    let link = document.createElement("a");
+    console.log(bookObj.title.split(" "))
+    //construct query string for search engine link
+    let queryString = "q=";
+    bookObj.title.split(" ").forEach(element => {
+        queryString += element + "+";
+    });
+    console.log(queryString.slice(0, -1));
+    link.href = `https://duckduckgo.com/?${queryString.slice(0, -1)}&t=newext&atb=v238-3&ia=web`;
+    link.innerHTML = bookImg.outerHTML;
+    link.target = "_blank"
+    bookElement.appendChild(link);
 
     //book information
     let bookInfo = document.createElement("div");
