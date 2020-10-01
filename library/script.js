@@ -1,6 +1,9 @@
+import { storeObj, checkStorage } from "./storage.js"
+
 let myLibrary = [];
 const bookContainer = document.getElementById("book-container");
 const addBookButton = document.getElementById("add-book");
+
 addBookButton.addEventListener('click', function() {
     const authorName = document.getElementById("author");
     const title = document.getElementById("title");
@@ -54,6 +57,7 @@ function appendToDocument(bookObj, index) {
     let bookElement = document.createElement("div");
     bookElement.appendChild(generateIcon(index));
     bookElement.classList = "card book col-sm-12 col-md-4 col-lg-4"
+
     //book img thumbnail
     let bookImg = document.createElement("img");
     bookImg.classList = "card-img-top thumbnail img-fluid";
@@ -98,14 +102,17 @@ function appendToDocument(bookObj, index) {
             if (this.classList == "read") {
                 this.classList = "unread";
                 this.innerHTML = "Unread";
-                myLibrary[index].read = false
+                bookObj.read = false;
+                storeObj(bookObj, index);
             } else {
                 this.classList = "read";
                 this.innerHTML = "Read";
-                myLibrary[index].read = true;
+                bookObj.read = true;
+                storeObj(bookObj, index);
             }
         })
         bookContainer.style = "display: flex;";
+        storeObj(bookObj, index);
 }
 
 function generateIcon(index) {
@@ -124,17 +131,26 @@ function addListener(element) {
         element.parentNode.removeChild(element)
         parentRoot.removeChild(parent);
         checkEmpty();
-        //keep books in library for now
+
+        //keep books in library for now since they cant reliably be referred to by index
         // myLibrary.splice(element.dataset.index, 1);
     })
 }
-// hide container and ugly empty element if there are no books
+
+// hide ugly empty element if there are no books
 function checkEmpty() {
     if (bookContainer.childElementCount == 0) {
         bookContainer.style = "display: none;"
     }
 }
+
 checkEmpty();
 
-addBookToLibrary(new Book("Here's a sample book for you! Working on custom pictures", "leetie", "42", true));
-myLibrary.forEach(appendToDocument, 0);
+//add first sample book if there are no books
+if (myLibrary.length < 1) {
+    let book = addBookToLibrary(new Book("Here's a sample book for you! Working on custom pictures", "leetie", "42", true));
+    storeObj(book, 0);
+}
+
+checkStorage();
+export { appendToDocument };

@@ -6,11 +6,19 @@ body {
     background-color: rgb(223, 206, 240);
 }
 
+.jumbotron {
+	background-color: rgb(231, 176, 231);
+}
+
 .navbar {
 	background-color: rgb(94, 44, 94);
 	height: 60px;
 }
 .fa-book {
+	color: white;
+}
+
+.fa-github {
 	color: white;
 }
 
