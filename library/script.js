@@ -11,7 +11,6 @@ addBookButton.addEventListener('click', function() {
         $("#book-form").modal("toggle");
         //create book object and add to page
         const book = new Book(title.value, authorName.value, numberOfPages.value, read);
-        bookContainer.style = "display: flex;"
         addBookToLibrary(book);
         appendToDocument(book, (myLibrary.length - 1));
         //clear form
@@ -54,8 +53,6 @@ function appendToDocument(bookObj, index) {
     //book root
     let bookElement = document.createElement("div");
     bookElement.appendChild(generateIcon(index));
-
-
     bookElement.classList = "card book col-sm-12 col-md-4 col-lg-4"
     //book img thumbnail
     let bookImg = document.createElement("img");
@@ -67,7 +64,6 @@ function appendToDocument(bookObj, index) {
     bookObj.title.split(" ").forEach(element => {
         queryString += element + "+";
     });
-    console.log(queryString.slice(0, -1));
     link.href = `https://duckduckgo.com/?${queryString.slice(0, -1)}&t=newext&atb=v238-3&ia=web`;
     link.innerHTML = bookImg.outerHTML;
     link.target = "_blank"
@@ -109,6 +105,7 @@ function appendToDocument(bookObj, index) {
                 myLibrary[index].read = true;
             }
         })
+        bookContainer.style = "display: flex;";
 }
 
 function generateIcon(index) {
@@ -138,3 +135,6 @@ function checkEmpty() {
     }
 }
 checkEmpty();
+
+addBookToLibrary(new Book("Here's a sample book for you! Working on custom pictures", "leetie", "42", true));
+myLibrary.forEach(appendToDocument, 0);
