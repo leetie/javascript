@@ -39,33 +39,34 @@ const game = function() {
         for (let i = 0; i < lines.length; i++) {
             const [a,b,c] = lines[i];
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-                console.log(`winner is ${board[a]}`);
                 updateResult(board[a]);
+                // removeListeners();
                 return board[a]; //return X or O if winner
             }
         }
         if (!board.includes("")) {
             updateResult(null);
+            // removeListeners();
             return;
         }
-        return null; // null for loser
+        return null; // null for tie
     }
-    (function addListeners() { //add listeners with iife
+    function addListeners() { 
         cells.forEach(element => {
             element.addEventListener('click', updateCell.bind(element));
         })
-    })();
-    function reset(winner) {
-        console.log("reset method");
+    };
+    function reset() {
         result.innerHTML = "";
         xIsNext = true;
         board.forEach((el, index) => board[index] = "");
+        cells.forEach(el => {
+            el.innerHTML = ""
+        });
         renderBoard();
     }
+    addListeners(); // add click listeners to cells
     return {
-        renderBoard,
-        xIsNext,
-        board,
-        updateCell,
+        //nothing
     }
 }();
