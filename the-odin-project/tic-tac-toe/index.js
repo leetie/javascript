@@ -10,8 +10,9 @@ const game = function() {
     function updateCell() {
         console.log("in update cell method");
         console.log(this);
+        console.log(xIsNext)
         this.innerHTML = xIsNext ? "X" : "O";
-        xIsNext = false;
+        xIsNext == true ? xIsNext = false : xIsNext = true;
     }
     return {
         renderBoard,
