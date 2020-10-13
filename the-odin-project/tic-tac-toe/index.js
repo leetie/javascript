@@ -1,8 +1,7 @@
-const cells = document.querySelectorAll('.cell'); // polluting global namespace
 const game = function() {
     const result = document.querySelector(".result");
-    const scoreboard = document.querySelector(".scoreboard");
     const board = Array(9).fill("");
+    const cells = document.querySelectorAll('.cell');
     const resetButton = document.querySelector("#reset");
     resetButton.addEventListener('click', reset);
 
@@ -24,7 +23,7 @@ const game = function() {
         checkWinner();
     }
     function updateResult(winner) {
-        winner ? result.innerHTML = `${winner} is the winner!` : result.innerHTML = "It's a tie!"; 
+        winner ? result.innerHTML = `${winner} is the winner!` : result.innerHTML = "It's a tie!";
     }
     function checkWinner() {
         const lines = [
@@ -51,8 +50,17 @@ const game = function() {
         }
         return null; // null for loser
     }
+    (function addListeners() { //add listeners with iife
+        cells.forEach(element => {
+            element.addEventListener('click', updateCell.bind(element));
+        })
+    })();
     function reset(winner) {
-        console.log("reset method")
+        console.log("reset method");
+        result.innerHTML = "";
+        xIsNext = true;
+        board.forEach((el, index) => board[index] = "");
+        renderBoard();
     }
     return {
         renderBoard,
@@ -61,6 +69,3 @@ const game = function() {
         updateCell,
     }
 }();
-cells.forEach(element => {
-    element.addEventListener('click', game.updateCell.bind(element))
-});
