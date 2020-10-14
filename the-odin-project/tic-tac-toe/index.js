@@ -45,17 +45,16 @@ const game = function() {
             }
         }
         if (!board.includes("")) {
-            updateResult(null);
+            updateResult(null); // null for tie
             // removeListeners();
             return;
         }
-        return null; // null for tie
     }
     function addListeners() { 
         cells.forEach(element => {
             element.addEventListener('click', updateCell.bind(element));
         })
-    };
+    }
     function reset() {
         result.innerHTML = "";
         xIsNext = true;
