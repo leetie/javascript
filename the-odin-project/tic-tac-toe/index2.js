@@ -1,6 +1,6 @@
 const game = (function() {
     'use strict';
-
+    // something something playerOne = new Player(getname()); 'factories for many'
     const _result = document.querySelector(".result");
     const _board = Array(9).fill("");
     const _cells = document.querySelectorAll(".cell");
