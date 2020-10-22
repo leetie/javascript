@@ -1,3 +1,5 @@
+// import { storeObj, checkStorage } from "./storage.js"
+import { storeObj, checkStorage } from './storage.js';
 // constants for DOM
 const bookContainer = document.getElementById("book-container");
 const addBookButton = document.getElementById("add-book");
@@ -55,7 +57,7 @@ class Book {
         console.log("book rendered!");
     }
 }
-// class for icon element???
+
 function generateIcon(id) { //##### UUID HERE
     let iconElement = document.createElement("i");
     iconElement.classList = "fas fa-times-circle fa-3x remove-book";
@@ -65,10 +67,18 @@ function generateIcon(id) { //##### UUID HERE
         let bookToRemove = myLibrary.books.find(function(item) {
             return item.id == iconElement.id;
         });
-        myLibrary.books.splice(
-            myLibrary.books.indexOf(bookToRemove),
-            1
-        );
+        console.log('index to remove is');
+        console.log(myLibrary.books.indexOf(bookToRemove));
+        // doesnt work... iterate array and remove that way
+        // let myIndex = myLibrary.books.indexOf(bookToRemove);
+        // myIndex > -1 ? myLibrary.books.splice(myIndex, 1) : myLibrary.books.splice(0, 1);
+        // if (myIndex > -1) {
+        //     myLibrary.books.splice(
+        //         myLibrary.books.indexOf(bookToRemove),
+        //         1
+        //     );
+        // }
+        myLibrary.render();
     });
     return iconElement;
 }
@@ -83,9 +93,9 @@ class Library {
     }
 
     render() {
-        // clear and re-render page on library render -- else 
+        // clear and re-render page on library render -- else
         // all book objects are rendered twice
-        console.log('render some stuff to document')
+        bookContainer.innerHTML = "";
         console.log(this.books)
         this.books.forEach(function(book, index) {
             book.render(index);
@@ -93,7 +103,6 @@ class Library {
     }
 }
 
-let myLibrary = new Library();
 
 // grab info from form, create book obj, then clear form
 addBookButton.addEventListener('click', function() {
@@ -114,3 +123,6 @@ addBookButton.addEventListener('click', function() {
         alert("Please complete form")
     }
 })
+
+let myLibrary = new Library();
+myLibrary.render();
