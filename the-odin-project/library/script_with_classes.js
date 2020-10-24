@@ -1,4 +1,3 @@
-// import { storeObj, checkStorage } from "./storage.js"
 import { storeObj, checkStorage } from './storage.js';
 // constants for DOM
 const bookContainer = document.getElementById("book-container");
@@ -7,12 +6,12 @@ const addBookButton = document.getElementById("add-book");
 let library = [];
 
 class Book {
-    constructor(title, author, numPages, read = false) {
+    constructor(title, author, numPages, read = false, id = Date.now().toString()) {
         this.title = title;
         this.author = author;
         this.numPages = numPages;
         this.read = read;
-        this.id = Date.now();
+        this.id = id;
     }
     validateBook() {
         if (this.title != "" && this.author != "" && this.numPages > 0) {
@@ -90,19 +89,18 @@ class Library {
     
     addBook(book) {
         this.books.push(book);
+        storeObj(book);
     }
 
     render() {
-        // clear and re-render page on library render -- else
-        // all book objects are rendered twice
         bookContainer.innerHTML = "";
         console.log(this.books)
         this.books.forEach(function(book, index) {
+            console.log("in render loop");
             book.render(index);
         });
     }
 }
-
 
 // grab info from form, create book obj, then clear form
 addBookButton.addEventListener('click', function() {
@@ -124,5 +122,10 @@ addBookButton.addEventListener('click', function() {
     }
 })
 
+// initialize library, check localstorage for existing books, and render
 let myLibrary = new Library();
+checkStorage().forEach(function(book) {
+    //make book obj so it has render method
+    myLibrary.books.push(new Book(book.title, book.author, book.numPages, book.read, book.id));
+});
 myLibrary.render();

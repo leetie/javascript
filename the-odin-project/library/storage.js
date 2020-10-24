@@ -5,11 +5,12 @@ function storeObj(obj) {
 }
 
 function checkStorage() {
+    let bookObjs = []
     if (localStorage.length > 0) {
-        let bookObjs = []
         for (let i = 0; i < localStorage.length; i++) {
             // appendToDocument((JSON.parse(localStorage[i])), i);
-            bookObjs.push(JSON.parse(localStorage[i]));
+            bookObjs.push(JSON.parse(localStorage[localStorage.key(i)]));
+            console.log(bookObjs)
         }
     }
     return bookObjs;
