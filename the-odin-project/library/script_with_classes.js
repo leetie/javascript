@@ -1,4 +1,4 @@
-import { storeObj, checkStorage } from './storage.js';
+import { storeObj, checkStorage, removeFromStorage } from './storage.js';
 // constants for DOM
 const bookContainer = document.getElementById("book-container");
 const addBookButton = document.getElementById("add-book");
@@ -51,32 +51,21 @@ class Book {
         }
         bookInfo.appendChild(readStatus);
         bookElement.appendChild(bookInfo);
-        bookElement.setAttribute('data-id', this.id); //######UUID HERE
+        bookElement.setAttribute('data-id', this.id);
         bookContainer.appendChild(bookElement);
-        console.log("book rendered!");
     }
 }
 
-function generateIcon(id) { //##### UUID HERE
+// removal of books from library.books ary and localstorage
+function generateIcon(id) {
     let iconElement = document.createElement("i");
     iconElement.classList = "fas fa-times-circle fa-3x remove-book";
     iconElement.style = "position: absolute; margin-left: 2em; margin-bottom: 1.5em; top: 0; right: 0;";
     iconElement.setAttribute("data-id", id)
     iconElement.addEventListener('click', function() {
-        let bookToRemove = myLibrary.books.find(function(item) {
-            return item.id == iconElement.id;
-        });
-        console.log('index to remove is');
-        console.log(myLibrary.books.indexOf(bookToRemove));
-        // doesnt work... iterate array and remove that way
-        // let myIndex = myLibrary.books.indexOf(bookToRemove);
-        // myIndex > -1 ? myLibrary.books.splice(myIndex, 1) : myLibrary.books.splice(0, 1);
-        // if (myIndex > -1) {
-        //     myLibrary.books.splice(
-        //         myLibrary.books.indexOf(bookToRemove),
-        //         1
-        //     );
-        // }
+        let bookId = iconElement.getAttribute('data-id');
+        removeFromStorage(bookId);
+        myLibrary.removeBook(bookId);
         myLibrary.render();
     });
     return iconElement;
@@ -92,11 +81,13 @@ class Library {
         storeObj(book);
     }
 
+    removeBook(id) {
+        this.books = this.books.filter(book => book.id !== id);
+    }
+
     render() {
         bookContainer.innerHTML = "";
-        console.log(this.books)
         this.books.forEach(function(book, index) {
-            console.log("in render loop");
             book.render(index);
         });
     }
